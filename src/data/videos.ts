@@ -17,84 +17,95 @@ export type VideoAspectRatio = "portrait" | "landscape" | "square";
 export type VideoFormat = "short" | "long";
 
 const rawPortfolioVideos = [
-  {
-    id: 1,
-    title: "High-Retention Short Form Edit",
-    category: "Short-form",
-    format: "short",
-    platform: "Instagram Reels / YouTube Shorts",
-    aspectRatio: "portrait",
-    description:
-      "A fast-paced short-form edit focused on hooks, captions, punchy cuts, zooms, and sound design.",
-    tools: ["Premiere Pro", "After Effects", "Captions"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/1tIXE3jzKl8NGpY6ooEBOxCd3Yugaa3as/view?usp=sharing",
-  },
-  {
-    id: 2,
-    title: "Podcast Clip Edit",
-    category: "Podcast",
-    format: "short",
-    platform: "LinkedIn / YouTube Shorts",
-    aspectRatio: "portrait",
-    description:
-      "A clean podcast clip edit with subtitles, jump cuts, improved pacing, and social-first formatting.",
-    tools: ["Premiere Pro", "Descript", "Sound Design"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/13oq6dZ8KePFVexfC10IEUIc7g58eBC8r/view?usp=sharing",
-  },
-  {
-    id: 3,
-    title: "Creator Talking-Head Edit",
-    category: "Short-form",
-    format: "short",
-    platform: "YouTube Shorts / Social",
-    aspectRatio: "portrait",
-    description:
-      "A talking-head edit with tighter pacing, captions, visual emphasis, and smooth retention-focused cuts.",
-    tools: ["Premiere Pro", "After Effects"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/1NRVK4MRmvYs4qeJvxLf8m28QyVqz8ziA/view?usp=sharing",
-  },
-  {
-    id: 4,
-    title: "Performance Ad Creative",
-    category: "Ads",
-    format: "short",
-    platform: "Meta Ads / Paid Social",
-    aspectRatio: "portrait",
-    description:
-      "A direct-response style edit built around clarity, speed, product storytelling, and attention-grabbing pacing.",
-    tools: ["Premiere Pro", "Motion Graphics"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/1l8NiFnKBuZqJ-lC3lvSkDcRaFYKhmCKR/view?usp=sharing",
-  },
-  {
-    id: 5,
-    title: "Brand Social Video",
-    category: "Brand",
-    format: "short",
-    platform: "Instagram / Brand Content",
-    aspectRatio: "portrait",
-    description:
-      "A polished brand-facing edit with clean pacing, smooth transitions, captions, and premium visual flow.",
-    tools: ["Premiere Pro", "After Effects"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/14NJIVcLh8TACnhe9hzgrb_xHeQkM6Afz/view?usp=sharing",
-  },
-  {
-    id: 6,
-    title: "Short Form Edit Sample",
-    category: "Short-form",
-    format: "short",
-    platform: "Instagram Reels / YouTube Shorts",
-    aspectRatio: "portrait",
-    description:
-      "A vertical short-form edit built for fast hooks, clean pacing, captions, and social-first viewing.",
-    tools: ["Premiere Pro", "After Effects", "Captions"],
-    rawVideoUrl:
-      "https://drive.google.com/file/d/1AS1lRA2kJfoTWR3g9zwsfcYMRWzE4IHa/view?usp=sharing",
-  },
+  // 1st reel
+{
+  id: 2,
+  title: "Podcast Clip Edit",
+  category: "Podcast",
+  format: "short",
+  platform: "LinkedIn / YouTube Shorts",
+  aspectRatio: "portrait",
+  description:
+    "A clean podcast clip edit with subtitles, jump cuts, improved pacing, and social-first formatting.",
+  tools: ["Premiere Pro", "Descript", "Sound Design"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/13oq6dZ8KePFVexfC10IEUIc7g58eBC8r/view?usp=sharing",
+},
+
+// 2nd reel
+{
+  id: 3,
+  title: "Creator Talking-Head Edit",
+  category: "Short-form",
+  format: "short",
+  platform: "YouTube Shorts / Social",
+  aspectRatio: "portrait",
+  description:
+    "A talking-head edit with tighter pacing, captions, visual emphasis, and smooth retention-focused cuts.",
+  tools: ["Premiere Pro", "After Effects"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/1NRVK4MRmvYs4qeJvxLf8m28QyVqz8ziA/view?usp=sharing",
+},
+
+// 3rd reel
+{
+  id: 5,
+  title: "Brand Social Video",
+  category: "Brand",
+  format: "short",
+  platform: "Instagram / Brand Content",
+  aspectRatio: "portrait",
+  description:
+    "A polished brand-facing edit with clean pacing, smooth transitions, captions, and premium visual flow.",
+  tools: ["Premiere Pro", "After Effects"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/14NJIVcLh8TACnhe9hzgrb_xHeQkM6Afz/view?usp=sharing",
+},
+
+// 4th reel
+{
+  id: 6,
+  title: "Short Form Edit Sample",
+  category: "Short-form",
+  format: "short",
+  platform: "Instagram Reels / YouTube Shorts",
+  aspectRatio: "portrait",
+  description:
+    "A vertical short-form edit built for fast hooks, clean pacing, captions, and social-first viewing.",
+  tools: ["Premiere Pro", "After Effects", "Captions"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/1AS1lRA2kJfoTWR3g9zwsfcYMRWzE4IHa/view?usp=sharing",
+},
+
+// 5th reel
+{
+  id: 4,
+  title: "Performance Ad Creative",
+  category: "Ads",
+  format: "short",
+  platform: "Meta Ads / Paid Social",
+  aspectRatio: "portrait",
+  description:
+    "A direct-response style edit built around clarity, speed, product storytelling, and attention-grabbing pacing.",
+  tools: ["Premiere Pro", "Motion Graphics"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/1l8NiFnKBuZqJ-lC3lvSkDcRaFYKhmCKR/view?usp=sharing",
+},
+
+// 6th reel / last
+{
+  id: 1,
+  title: "High-Retention Short Form Edit",
+  category: "Short-form",
+  format: "short",
+  platform: "Instagram Reels / YouTube Shorts",
+  aspectRatio: "portrait",
+  description:
+    "A fast-paced short-form edit focused on hooks, captions, punchy cuts, zooms, and sound design.",
+  tools: ["Premiere Pro", "After Effects", "Captions"],
+  rawVideoUrl:
+    "https://drive.google.com/file/d/1tIXE3jzKl8NGpY6ooEBOxCd3Yugaa3as/view?usp=sharing",
+},
 
   {
   id: 7,
