@@ -5,15 +5,18 @@ type SectionRevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  id?: string;
 };
 
 export function SectionReveal({
   children,
   className = "",
   delay = 0,
+  id,
 }: SectionRevealProps) {
   return (
     <motion.div
+      id={id}
       initial={{ opacity: 0, y: 36, filter: "blur(10px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-120px" }}

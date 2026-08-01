@@ -1,94 +1,119 @@
 export const editorProfile = {
-  name: "TheKeyframe",
-  role: "Video Editor",
-  headline: "Video editing that makes people stop scrolling.",
+  studioName: "TheKeyframe",
+  name: "Vivek Negi",
+  role: "Independent Video Editor",
+  location: "India · Working worldwide",
+  availability: "Available for select projects",
+  headline: "Edits that earn the next second.",
   subheadline:
-    "High-retention edits for creators, brands, agencies, podcasts, ads, and social-first content.",
+    "I turn raw footage into sharp, story-led videos built to hold attention — from fast-moving social cuts to long-form YouTube.",
   email: "singhvivek5832@gmail.com",
   phone: "+91 98215 06819",
   whatsappUrl: "https://wa.me/919821506819",
 };
 
-export const stats = [
+export const capabilities = [
+  "Short-form",
+  "Long-form YouTube",
+  "Motion & sound",
+  "Remote worldwide",
+];
+
+export const services = [
   {
-    value: "5+",
-    label: "Portfolio Samples",
+    number: "01",
+    title: "Short-form editing",
+    description:
+      "Reels, Shorts, and social cuts with immediate hooks, readable captions, energetic pacing, and purposeful pattern interrupts.",
+    deliverables: ["Reels & Shorts", "Captions", "Platform-ready exports"],
   },
   {
-    value: "4",
-    label: "Editing Styles",
+    number: "02",
+    title: "Long-form YouTube",
+    description:
+      "Story-led edits that remove the drag, preserve personality, and keep each chapter moving with clean visual support.",
+    deliverables: ["Talking head", "B-roll & graphics", "Retention pacing"],
   },
   {
-    value: "100%",
-    label: "Video-First Workflow",
+    number: "03",
+    title: "Podcast cutdowns",
+    description:
+      "Long conversations shaped into focused clips with a clear premise, natural rhythm, and a strong reason to keep watching.",
+    deliverables: ["Clip selection", "Multi-cam", "Social reframing"],
+  },
+  {
+    number: "04",
+    title: "Ads & brand content",
+    description:
+      "Polished performance and brand edits that make the message easy to understand and the product hard to ignore.",
+    deliverables: ["Paid social", "Motion graphics", "Sound design"],
   },
 ];
 
 export const processSteps = [
   {
     number: "01",
-    title: "Footage Audit",
+    title: "Find the story",
     description:
-      "Raw footage is reviewed to find the strongest hooks, cleanest moments, and best story direction.",
+      "I review the footage, the audience, and the goal to find the strongest opening and clearest narrative.",
   },
   {
     number: "02",
-    title: "Retention Structure",
+    title: "Build the rhythm",
     description:
-      "The edit is shaped around pacing, curiosity, pattern interrupts, and a clear reason to keep watching.",
+      "The first cut focuses on structure and pacing — removing dead weight while keeping the voice natural.",
   },
   {
     number: "03",
-    title: "Visual Polish",
+    title: "Add the finish",
     description:
-      "Captions, zooms, B-roll, sound design, transitions, motion graphics, and platform formatting are added.",
+      "B-roll, captions, motion, music, sound design, and color are layered in only where they improve the watch.",
   },
   {
     number: "04",
-    title: "Delivery",
+    title: "Review & deliver",
     description:
-      "Final files are exported for the right platform with clean naming, correct ratios, and revision-ready delivery.",
+      "Feedback stays simple and the final exports arrive organized, correctly formatted, and ready to publish.",
   },
 ];
 
-export const services = [
+export const faqs = [
   {
-    title: "Short-form Editing",
-    description:
-      "Reels, TikToks, and Shorts with strong hooks, captions, pacing, zooms, and sound design.",
+    question: "What kind of projects do you take on?",
+    answer:
+      "I work on short-form social content, YouTube videos, podcast cutdowns, ads, and creator-led brand content. If the project needs strong pacing and a polished story, it is probably a fit.",
   },
   {
-    title: "Podcast Clips",
-    description:
-      "Long conversations turned into sharp, social-first clips for LinkedIn, Instagram, and YouTube Shorts.",
+    question: "How quickly can you deliver?",
+    answer:
+      "Turnaround depends on footage length and complexity. After reviewing the footage and brief, I’ll confirm a clear delivery date before the edit begins.",
   },
   {
-    title: "YouTube Editing",
-    description:
-      "Talking-head and long-form edits with B-roll, graphics, cleanup, structure, and better retention.",
+    question: "Can you match an existing editing style?",
+    answer:
+      "Yes. Share references and I can build around an established visual language while keeping the edit appropriate for your voice and audience.",
   },
   {
-    title: "Ad Creatives",
-    description:
-      "Clear, fast, performance-focused edits for paid social, launches, and product campaigns.",
+    question: "How do revisions work?",
+    answer:
+      "Each project includes a clearly agreed revision process. Timestamped feedback is preferred so changes stay fast, specific, and easy to track.",
+  },
+  {
+    question: "Can we work together remotely?",
+    answer:
+      "Absolutely. Footage, briefs, feedback, and delivery can all be handled remotely with a clean folder and review workflow.",
   },
 ];
 
 export const socialLinks = [
   {
     label: "Instagram",
-    href: "https://instagram.com/yourusername",
+    handle: "@lastkeyframe",
+    href: "https://www.instagram.com/lastkeyframe/",
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/yourusername",
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/@yourusername",
-  },
-  {
-    label: "Behance",
-    href: "https://behance.net/yourusername",
+    handle: "Vivek Negi",
+    href: "https://www.linkedin.com/in/vivek-negi-380a211b7/",
   },
 ];

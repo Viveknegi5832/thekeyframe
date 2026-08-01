@@ -1,38 +1,155 @@
 import { useState } from "react";
-import { motion } from "motion/react";
-import { Clapperboard, Film, Megaphone, Mic2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import {
+  ArrowUpRight,
+  Captions,
+  Clapperboard,
+  Headphones,
+  WandSparkles,
+} from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { services } from "@/data/site";
 import { SectionReveal } from "@/components/shared/SectionReveal";
 
-const icons = [Clapperboard, Mic2, Film, Megaphone];
+const serviceIcons = [Captions, Clapperboard, Headphones, WandSparkles];
 
-const layerMeta = [
+const previewData = [
   {
-    track: "V1",
-    label: "SHORTS_ENGINE",
-    blend: "Normal",
-    color: "from-sky-300/70 to-sky-500/30",
+    file: "VERTICAL_MASTER_01",
+    label: "Short-form engine",
+    headline: "Hook. Hold. Payoff.",
+    gradient:
+      "radial-gradient(circle at 70% 22%, rgba(255,95,55,.72), transparent 27%), radial-gradient(circle at 22% 76%, rgba(94,67,255,.72), transparent 40%), #111116",
+    tracks: ["CAPTIONS", "PATTERN_BREAK", "SFX"],
   },
   {
-    track: "A1",
-    label: "PODCAST_CUTDOWN",
-    blend: "Dialogue",
-    color: "from-violet-300/70 to-violet-500/30",
+    file: "YOUTUBE_MASTER_04",
+    label: "Long-form structure",
+    headline: "Make 10 minutes feel like 2.",
+    gradient:
+      "radial-gradient(circle at 30% 22%, rgba(51,108,255,.65), transparent 30%), radial-gradient(circle at 75% 78%, rgba(178,77,255,.58), transparent 42%), #111116",
+    tracks: ["STORY_ARC", "B_ROLL", "MUSIC"],
   },
   {
-    track: "V2",
-    label: "LONGFORM_STRUCTURE",
-    blend: "Story",
-    color: "from-emerald-300/70 to-emerald-500/30",
+    file: "PODCAST_SELECTS_02",
+    label: "Podcast cutdowns",
+    headline: "Find the moment inside the hour.",
+    gradient:
+      "radial-gradient(circle at 65% 28%, rgba(255,77,36,.62), transparent 28%), radial-gradient(circle at 22% 75%, rgba(37,127,126,.72), transparent 40%), #111116",
+    tracks: ["MULTICAM", "DIALOGUE", "REFRAME"],
   },
   {
-    track: "FX",
-    label: "PAID_SOCIAL_CUT",
-    blend: "Punch",
-    color: "from-amber-300/70 to-amber-500/30",
+    file: "PAID_SOCIAL_V03",
+    label: "Ads & brand",
+    headline: "Clarity that moves.",
+    gradient:
+      "radial-gradient(circle at 74% 25%, rgba(255,178,50,.62), transparent 28%), radial-gradient(circle at 28% 72%, rgba(224,55,79,.65), transparent 42%), #111116",
+    tracks: ["PRODUCT", "MOTION", "CTA"],
   },
 ];
+
+function ServicePreview({ activeIndex }: { activeIndex: number }) {
+  const preview = previewData[activeIndex];
+
+  return (
+    <div className="overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#111116] shadow-[0_36px_120px_rgba(0,0,0,0.52)]">
+      <div className="flex items-center justify-between border-b border-white/10 bg-[#19191f] px-4 py-3">
+        <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/35">
+          Program / {preview.file}
+        </p>
+        <span className="flex items-center gap-2 font-mono text-[8px] uppercase tracking-[0.16em] text-white/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#68d36e]" />
+          Live preview
+        </span>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={preview.file}
+          initial={{ opacity: 0, scale: 0.985 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.015 }}
+          transition={{ duration: 0.35 }}
+        >
+          <div
+            className="relative aspect-[16/10] overflow-hidden p-6 md:p-8"
+            style={{ background: preview.gradient }}
+          >
+            <div className="absolute inset-0 service-preview-grid opacity-25" />
+            <div className="absolute left-6 top-6 h-8 w-8 border-l border-t border-white/35" />
+            <div className="absolute right-6 top-6 h-8 w-8 border-r border-t border-white/35" />
+            <div className="absolute bottom-6 left-6 h-8 w-8 border-b border-l border-white/35" />
+            <div className="absolute bottom-6 right-6 h-8 w-8 border-b border-r border-white/35" />
+
+            <div className="relative flex h-full flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <p className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/45">
+                  {preview.label}
+                </p>
+                <p className="font-mono text-[8px] text-white/30">
+                  1920 × 1080
+                </p>
+              </div>
+
+              <motion.h3
+                initial={{ y: 18, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className="max-w-xl text-[clamp(2.5rem,5vw,5.8rem)] font-semibold leading-[0.84] tracking-[-0.07em] text-white"
+              >
+                {preview.headline}
+              </motion.h3>
+
+              <div className="flex items-end justify-between">
+                <p className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/35">
+                  TheKeyframe / Output 0{activeIndex + 1}
+                </p>
+                <span className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/20">
+                  <span className="h-2 w-2 rounded-full bg-[#ff6b49] shadow-[0_0_16px_#ff4d24]" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 bg-[#15151a] p-3">
+            <div className="grid gap-1.5">
+              {preview.tracks.map((track, index) => (
+                <div
+                  key={track}
+                  className="grid grid-cols-[44px_minmax(0,1fr)] items-center gap-2"
+                >
+                  <span className="font-mono text-[7px] text-white/25">
+                    {index === 0 ? "V1" : index === 1 ? "V2" : "A1"}
+                  </span>
+                  <div className="relative h-5 overflow-hidden rounded-[3px] bg-black/25">
+                    <motion.span
+                      key={`${preview.file}-${track}`}
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.6, delay: index * 0.08 }}
+                      className={`absolute inset-y-0 origin-left rounded-[3px] ${
+                        index === 0
+                          ? "bg-[#ff4d24]/65"
+                          : index === 1
+                            ? "bg-[#675cff]/60"
+                            : "bg-[#4a6e80]/65"
+                      }`}
+                      style={{
+                        left: `${4 + index * 9}%`,
+                        width: `${72 - index * 11}%`,
+                      }}
+                    />
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-[6px] uppercase tracking-[0.14em] text-white/55">
+                      {track}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,171 +157,117 @@ export function ServicesSection() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden bg-[#050505] px-4 py-28 text-white"
+      className="relative scroll-mt-20 overflow-hidden bg-[#101014] px-4 py-28 text-white md:px-6 md:py-40"
     >
-<div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(159,216,255,0.08),transparent_28%),radial-gradient(circle_at_82%_38%,rgba(139,92,246,0.10),transparent_34%),linear-gradient(to_bottom,#050505,#08070b_48%,#050505)]" />
-<div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.55),transparent_22%,transparent_78%,rgba(0,0,0,0.55))]" />
-      <div className="relative z-10 mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-        <SectionReveal className="lg:sticky lg:top-28 lg:h-fit">
-          <Badge className="rounded-full border border-white/10 bg-white/[0.05] text-neutral-200 hover:bg-white/[0.05]">
-            Effects Stack
-          </Badge>
-
-          <h2 className="mt-5 max-w-2xl text-4xl font-bold leading-[0.96] tracking-[-0.045em] md:text-6xl">
-            Editing support, stacked like a post-production workflow.
-          </h2>
-
-          <p className="mt-6 max-w-xl text-lg leading-8 text-neutral-400">
-            Each service is built like a layer in the edit — structured,
-            intentional, and designed to make the final cut sharper.
-          </p>
-
-          <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035]">
-            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-                Active Effect
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(255,77,36,0.08),transparent_30%),radial-gradient(circle_at_85%_60%,rgba(101,82,255,0.09),transparent_35%)]" />
+      <div className="relative mx-auto max-w-[1440px]">
+        <SectionReveal className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.23em] text-[#ff7455]">
+              Post-production stack / 04
+            </p>
+            <h2 className="mt-6 text-[clamp(3.8rem,7.6vw,8rem)] font-semibold leading-[0.8] tracking-[-0.074em]">
+              More than
+              <span className="block font-serif font-normal italic text-white/30">
+                clean cuts.
               </span>
-              <span className="font-mono text-[10px] text-sky-200">
-                {layerMeta[activeIndex].track}
-              </span>
-            </div>
-
-            <div className="p-4">
-              <p className="font-mono text-sm uppercase tracking-[0.1em] text-white">
-                {layerMeta[activeIndex].label}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-neutral-500">
-                Hover through the stack to preview how each service plugs into
-                the editing pipeline.
-              </p>
-            </div>
+            </h2>
           </div>
+
+          <p className="max-w-2xl text-lg leading-8 text-white/42 lg:pb-3">
+            Every layer has a job: establish the idea, control the pace, guide
+            the eye, and make the payoff land. Open the stack to inspect the
+            build.
+          </p>
         </SectionReveal>
 
-        <SectionReveal delay={0.1}>
-          <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#111216]/90 shadow-2xl shadow-black/40 backdrop-blur-xl">
-            <div className="grid grid-cols-[72px_minmax(0,1fr)_96px] border-b border-white/10 bg-[#18191f] px-4 py-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                Track
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                Layer / Effect
-              </span>
-              <span className="text-right font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                Mode
-              </span>
-            </div>
-
-            <div className="divide-y divide-white/10">
+        <div className="mt-14 grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+          <SectionReveal>
+            <div className="border-t border-white/10">
               {services.map((service, index) => {
-                const Icon = icons[index];
-                const meta = layerMeta[index];
+                const Icon = serviceIcons[index];
                 const isActive = activeIndex === index;
 
                 return (
-                  <motion.article
-                    key={service.title}
-                    layout
+                  <button
+                    key={service.number}
+                    type="button"
                     onMouseEnter={() => setActiveIndex(index)}
-                    className="group relative grid cursor-pointer grid-cols-[72px_minmax(0,1fr)_96px] gap-4 overflow-hidden px-4 py-4"
-                    animate={{
-                      backgroundColor: isActive
-                        ? "rgba(255,255,255,0.075)"
-                        : "rgba(255,255,255,0.02)",
-                    }}
-                    transition={{ duration: 0.28 }}
+                    onFocus={() => setActiveIndex(index)}
+                    onClick={() => setActiveIndex(index)}
+                    className="group relative w-full overflow-hidden border-b border-white/10 py-6 text-left"
                   >
-                    <motion.div
-                      className="absolute inset-y-0 left-0 w-[3px] bg-sky-200"
-                      animate={{ opacity: isActive ? 1 : 0 }}
+                    <motion.span
+                      className="absolute inset-0 origin-left bg-white/[0.035]"
+                      animate={{ scaleX: isActive ? 1 : 0 }}
+                      transition={{ duration: 0.3 }}
                     />
-
-                    <div className="flex items-start gap-2">
-                      <div className="mt-1 grid h-8 w-8 place-items-center rounded-lg border border-white/10 bg-black/30 font-mono text-[10px] text-neutral-400">
-                        {meta.track}
-                      </div>
-                    </div>
-
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-3">
-                        <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] transition group-hover:border-sky-200/50">
-                          <Icon className="h-5 w-5 text-neutral-200" />
-                        </div>
-
-                        <div className="min-w-0">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500">
-                              {meta.label}
-                            </p>
-
-                            <span className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-neutral-500">
-                              0{index + 1}
-                            </span>
-                          </div>
-
-                          <h3 className="mt-1 text-2xl font-bold leading-[1.05] tracking-[-0.035em] text-white">
+                    <div className="relative grid grid-cols-[42px_1fr_42px] items-start gap-4 px-2">
+                      <span
+                        className={`grid h-9 w-9 place-items-center rounded-lg border transition ${
+                          isActive
+                            ? "border-[#ff4d24] bg-[#ff4d24] text-white"
+                            : "border-white/10 text-white/35"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <div>
+                        <div className="flex items-center gap-3">
+                          <h3
+                            className={`text-2xl font-semibold tracking-[-0.04em] transition md:text-3xl ${
+                              isActive ? "text-white" : "text-white/48"
+                            }`}
+                          >
                             {service.title}
                           </h3>
+                          <span className="font-mono text-[8px] text-white/20">
+                            {service.number}
+                          </span>
                         </div>
+                        <AnimatePresence initial={false}>
+                          {isActive && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden"
+                            >
+                              <p className="max-w-lg pt-4 text-sm leading-6 text-white/40">
+                                {service.description}
+                              </p>
+                              <div className="flex flex-wrap gap-2 pt-4">
+                                {service.deliverables.map((deliverable) => (
+                                  <span
+                                    key={deliverable}
+                                    className="rounded-full border border-white/10 px-2.5 py-1 text-[9px] text-white/38"
+                                  >
+                                    {deliverable}
+                                  </span>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-
-                      <motion.div
-                        initial={false}
-                        animate={{
-                          height: isActive ? "auto" : 0,
-                          opacity: isActive ? 1 : 0,
-                          marginTop: isActive ? 16 : 0,
-                        }}
-                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="max-w-2xl text-sm leading-7 text-neutral-400">
-                          {service.description}
-                        </p>
-                      </motion.div>
-
-                      <div className="relative mt-4 h-5 overflow-hidden rounded-md border border-white/10 bg-black/30">
-                        <motion.div
-                          className={`h-full rounded-sm bg-gradient-to-r ${meta.color}`}
-                          initial={false}
-                          animate={{ width: isActive ? "92%" : "46%" }}
-                          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                        />
-
-                        {[18, 42, 68, 86].map((position) => (
-                          <motion.span
-                            key={position}
-                            className="absolute top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 border border-white/30 bg-white/20"
-                            style={{ left: `${position}%` }}
-                            animate={{
-                              scale: isActive ? 1 : 0.7,
-                              opacity: isActive ? 1 : 0.35,
-                            }}
-                          />
-                        ))}
-                      </div>
+                      <ArrowUpRight
+                        className={`mt-2 h-4 w-4 transition ${
+                          isActive
+                            ? "text-[#ff7455]"
+                            : "text-white/18 group-hover:text-white/45"
+                        }`}
+                      />
                     </div>
-
-                    <div className="text-right">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-500">
-                        {meta.blend}
-                      </p>
-
-                      <motion.p
-                        className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em]"
-                        animate={{
-                          color: isActive ? "#bae6fd" : "#52525b",
-                        }}
-                      >
-                        {isActive ? "Enabled" : "Idle"}
-                      </motion.p>
-                    </div>
-                  </motion.article>
+                  </button>
                 );
               })}
             </div>
-          </div>
-        </SectionReveal>
+          </SectionReveal>
+
+          <SectionReveal delay={0.08} className="lg:sticky lg:top-28">
+            <ServicePreview activeIndex={activeIndex} />
+          </SectionReveal>
+        </div>
       </div>
     </section>
   );
