@@ -1,4 +1,5 @@
 import {
+  getAutoplayPreviewUrl,
   getVideoEmbedUrl,
   getVideoPlatform,
   getVideoThumbnailUrl,
@@ -166,7 +167,11 @@ const rawPortfolioVideos: PortfolioVideo[] = [
 export const portfolioVideos = rawPortfolioVideos.map((video) => ({
   ...video,
   videoPlatform: getVideoPlatform(video.rawVideoUrl),
-  videoUrl: getVideoEmbedUrl(video.rawVideoUrl),
+  videoUrl: getVideoEmbedUrl(video.rawVideoUrl, true),
+  previewUrl:
+    video.format === "short" && video.status === "live"
+      ? `${import.meta.env.BASE_URL}videos/${video.id}-preview.mp4`
+      : getAutoplayPreviewUrl(video.rawVideoUrl),
   viewUrl: getVideoViewUrl(video.rawVideoUrl),
   thumbnailUrl: getVideoThumbnailUrl(video.rawVideoUrl),
 }));

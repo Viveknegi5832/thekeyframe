@@ -6,7 +6,7 @@ export const editorProfile = {
   availability: "Available for select projects",
   headline: "Edits that earn the next second.",
   subheadline:
-    "I turn raw footage into sharp, story-led videos built to hold attention — from fast-moving social cuts to long-form YouTube.",
+    "I turn raw footage into sharp, story-led videos built to hold attention—from fast-moving social cuts to long-form YouTube.",
   email: "singhvivek5832@gmail.com",
   phone: "+91 98215 06819",
   whatsappUrl: "https://wa.me/919821506819",
@@ -55,25 +55,25 @@ export const processSteps = [
     number: "01",
     title: "Find the story",
     description:
-      "I review the footage, the audience, and the goal to find the strongest opening and clearest narrative.",
+      "Review the footage, audience, and goal to find the strongest opening and clearest narrative.",
   },
   {
     number: "02",
     title: "Build the rhythm",
     description:
-      "The first cut focuses on structure and pacing — removing dead weight while keeping the voice natural.",
+      "Shape the structure and pacing—removing dead weight while keeping the voice natural.",
   },
   {
     number: "03",
     title: "Add the finish",
     description:
-      "B-roll, captions, motion, music, sound design, and color are layered in only where they improve the watch.",
+      "Layer in B-roll, captions, motion, music, sound, and color only where they improve the watch.",
   },
   {
     number: "04",
     title: "Review & deliver",
     description:
-      "Feedback stays simple and the final exports arrive organized, correctly formatted, and ready to publish.",
+      "Keep feedback simple, then deliver organized exports in every format the project needs.",
   },
 ];
 
@@ -81,12 +81,12 @@ export const faqs = [
   {
     question: "What kind of projects do you take on?",
     answer:
-      "I work on short-form social content, YouTube videos, podcast cutdowns, ads, and creator-led brand content. If the project needs strong pacing and a polished story, it is probably a fit.",
+      "Short-form social content, YouTube videos, podcast cutdowns, ads, and creator-led brand content. If it needs strong pacing and a polished story, it is probably a fit.",
   },
   {
     question: "How quickly can you deliver?",
     answer:
-      "Turnaround depends on footage length and complexity. After reviewing the footage and brief, I’ll confirm a clear delivery date before the edit begins.",
+      "Turnaround depends on footage length and complexity. After reviewing the footage and brief, I will confirm a clear delivery date before the edit begins.",
   },
   {
     question: "Can you match an existing editing style?",
@@ -96,12 +96,12 @@ export const faqs = [
   {
     question: "How do revisions work?",
     answer:
-      "Each project includes a clearly agreed revision process. Timestamped feedback is preferred so changes stay fast, specific, and easy to track.",
+      "Each project includes an agreed revision process. Timestamped feedback keeps changes fast, specific, and easy to track.",
   },
   {
     question: "Can we work together remotely?",
     answer:
-      "Absolutely. Footage, briefs, feedback, and delivery can all be handled remotely with a clean folder and review workflow.",
+      "Absolutely. Footage, briefs, feedback, and delivery can all be handled remotely through a clean, organized workflow.",
   },
 ];
 

@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { SiteHeader } from "@/components/shared/SiteHeader";
+import { ContactSection } from "@/components/sections/ContactSection";
+import { FAQSection } from "@/components/sections/FAQSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { PortfolioSection } from "@/components/sections/PortfolioSection";
-import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
-import { FAQSection } from "@/components/sections/FAQSection";
-import { ContactSection } from "@/components/sections/ContactSection";
+import { SiteHeader } from "@/components/shared/SiteHeader";
 
 function App() {
   useEffect(() => {
@@ -17,11 +16,16 @@ function App() {
 
   return (
     <>
+      <a
+        href="#content"
+        className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition focus:translate-y-0"
+      >
+        Skip to content
+      </a>
       <SiteHeader />
-      <main className="min-h-screen bg-[#0b0c0c]">
+      <main id="content" className="min-h-screen overflow-hidden bg-black">
         <HeroSection />
         <PortfolioSection />
-        <ServicesSection />
         <ProcessSection />
         <FAQSection />
         <ContactSection />

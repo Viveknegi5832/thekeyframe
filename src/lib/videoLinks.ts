@@ -106,7 +106,6 @@ export function getVideoEmbedUrl(url: string, autoplay = false): string {
 
     if (autoplay) {
       params.set("autoplay", "1");
-      params.set("mute", "1");
       params.set("playsinline", "1");
     }
 
@@ -143,6 +142,39 @@ export function getVideoViewUrl(url: string): string {
 
   if (driveFileId) {
     return `https://drive.google.com/file/d/${driveFileId}/view`;
+  }
+
+  return url;
+}
+
+export function getAutoplayPreviewUrl(url: string): string {
+  const driveFileId = getGoogleDriveFileId(url);
+
+  if (driveFileId) {
+    return `https://drive.usercontent.google.com/download?id=${driveFileId}&export=download&confirm=t`;
+  }
+
+  const youtubeData = getYouTubeData(url);
+
+  if (youtubeData) {
+    const params = new URLSearchParams({
+      autoplay: "1",
+      mute: "1",
+      controls: "0",
+      disablekb: "1",
+      playsinline: "1",
+      rel: "0",
+      modestbranding: "1",
+      loop: "1",
+      playlist: youtubeData.id,
+      enablejsapi: "1",
+    });
+
+    if (youtubeData.start > 0) {
+      params.set("start", String(youtubeData.start));
+    }
+
+    return `https://www.youtube.com/embed/${youtubeData.id}?${params.toString()}`;
   }
 
   return url;

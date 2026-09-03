@@ -1,36 +1,36 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/instrument-sans";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  font-family: "Geist Variable", "Helvetica Neue", Arial, sans-serif;
-  color: #f7f4ee;
-  background: #09090a;
+  font-family: "Instrument Sans Variable", "Helvetica Neue", Arial, sans-serif;
+  color: #f6f6f6;
+  background: #000;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   --radius: 0.75rem;
-  --background: oklch(0.14 0.005 285);
-  --foreground: oklch(0.97 0.01 85);
-  --card: oklch(0.18 0.008 285);
-  --card-foreground: oklch(0.97 0.01 85);
-  --popover: oklch(0.18 0.008 285);
-  --popover-foreground: oklch(0.97 0.01 85);
-  --primary: oklch(0.67 0.23 36);
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: #f06a4f;
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.24 0.008 285);
-  --secondary-foreground: oklch(0.97 0.01 85);
-  --muted: oklch(0.23 0.008 285);
-  --muted-foreground: oklch(0.65 0.01 285);
-  --accent: oklch(0.67 0.23 36);
+  --secondary: oklch(0.2 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.2 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: #f06a4f;
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.65 0.24 25);
-  --border: oklch(1 0 0 / 12%);
+  --border: oklch(1 0 0 / 15%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.67 0.23 36);
+  --ring: #f06a4f;
 }
 
 * {
@@ -39,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #09090a;
+  background: #000;
 }
 
 body {
@@ -47,21 +47,22 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: #09090a;
+  background: #000;
 }
 
 body::before {
   position: fixed;
-  z-index: 999;
+  z-index: 80;
   inset: 0;
   pointer-events: none;
   content: "";
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
 }
 
 button,
-a {
+a,
+summary {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -74,127 +75,49 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid #ff6b49;
+  outline: 2px solid #f06a4f;
   outline-offset: 3px;
 }
 
 ::selection {
-  color: white;
-  background: #ff4d24;
+  color: #fff;
+  background: #c84f39;
 }
 
 ::-webkit-scrollbar {
-  width: 9px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090a;
+  background: #000;
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 3px solid #09090a;
+  border: 2px solid #000;
   border-radius: 999px;
-  background: #444047;
+  background: #343434;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #ff4d24;
-}
-
-.cutroom-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, black 0%, transparent 78%);
-}
-
-.cutroom-grid::before,
-.cutroom-grid::after {
-  position: absolute;
-  inset-y: 0;
-  width: 1px;
-  content: "";
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 77, 36, 0.28),
-    transparent
-  );
-}
-
-.cutroom-grid::before {
-  left: 16%;
-}
-
-.cutroom-grid::after {
-  right: 16%;
-}
-
-.kinetic-marquee {
-  animation: marquee 24s linear infinite;
-}
-
-.project-heat-one {
+.hero-glow {
   background:
-    radial-gradient(circle at 72% 18%, rgba(255, 80, 42, 0.68), transparent 28%),
-    radial-gradient(circle at 25% 78%, rgba(94, 71, 255, 0.72), transparent 43%),
-    #15151a;
+    radial-gradient(circle at 14% 20%, rgba(240, 106, 79, 0.1), transparent 28%),
+    radial-gradient(circle at 82% 44%, rgba(240, 106, 79, 0.035), transparent 24%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.018), transparent 36%);
 }
 
-.project-heat-two {
+.project-fallback {
   background:
-    radial-gradient(circle at 28% 20%, rgba(188, 70, 255, 0.68), transparent 30%),
-    radial-gradient(circle at 74% 76%, rgba(27, 116, 169, 0.7), transparent 42%),
-    #15151a;
+    radial-gradient(circle at 72% 30%, rgba(240, 106, 79, 0.55), transparent 26%),
+    radial-gradient(circle at 24% 70%, rgba(121, 65, 54, 0.42), transparent 34%),
+    #101010;
 }
 
-.service-preview-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: radial-gradient(circle, black, transparent 82%);
-}
-
-.process-paper {
-  background-image:
-    linear-gradient(rgba(26, 23, 19, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 23, 19, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.contact-lines {
-  background-image:
-    linear-gradient(90deg, transparent 49.8%, rgba(255, 255, 255, 0.08) 50%, transparent 50.2%),
-    radial-gradient(circle at 50% 110%, rgba(255, 77, 36, 0.35), transparent 43%);
-}
-
-.short-work-rail {
-  scrollbar-width: none;
-}
-
-.short-work-rail::-webkit-scrollbar {
+.faq-item > summary::-webkit-details-marker {
   display: none;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 767px) {
-  .cutroom-grid {
-    background-size: 42px 42px;
-  }
-
-  body::before {
-    opacity: 0.018;
-  }
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
