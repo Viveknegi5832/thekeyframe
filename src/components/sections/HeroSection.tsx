@@ -81,7 +81,6 @@ export function HeroSection() {
             <div className="group relative aspect-video w-full overflow-hidden bg-black">
               <AutoplayVideo video={featuredVideo} />
               <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.6),transparent_58%),linear-gradient(0deg,rgba(0,0,0,0.62),transparent_45%)]" />
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1 bg-[#f06a4f]" />
               <span className="pointer-events-none absolute bottom-5 left-5 z-10 text-white sm:bottom-8 sm:left-8">
                 <span className="block text-[8px] font-semibold uppercase tracking-[0.2em] text-[#ff947d]">
                   Autoplay preview / 01
