@@ -130,6 +130,18 @@ function Services() {
   const [hover, setHover] = useState(0);
   const [sound, setSound] = useState(false);
   const [ref, on] = useInView<HTMLElement>();
+  const [visible, setVisible] = useState(false);
+  const vids = useRef<(HTMLVideoElement | null)[]>([]);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  useEffect(() => {
+    vids.current.forEach((v, i) => { if (!v) return; if (visible && i === hover) void v.play().catch(() => {}); else v.pause(); });
+  }, [visible, hover, sound]);
   // mute again when the section scrolls out of view
   useEffect(() => {
     const el = ref.current;
@@ -152,9 +164,9 @@ function Services() {
         {SERVICES.map((s, i) =>
           sound && hover === i ? (
             // sound on: the full clip with audio, from the top
-            <video key={`${s.clip}-full`} className="on" src={src(s.clip)} poster={poster(s.clip)} autoPlay loop playsInline />
+            <video key={`${s.clip}-full`} ref={(el) => { vids.current[i] = el; }} className="on" src={src(s.clip)} poster={poster(s.clip)} loop playsInline />
           ) : (
-            <video key={s.clip} className={hover === i ? "on" : ""} src={loop(s.clip)} poster={poster(s.clip)} muted autoPlay loop playsInline />
+            <video key={s.clip} ref={(el) => { vids.current[i] = el; }} className={hover === i ? "on" : ""} src={loop(s.clip)} poster={poster(s.clip)} muted loop playsInline />
           ),
         )}
         <button className="svc-sound" onClick={() => setSound((v) => !v)} aria-pressed={sound}>
@@ -234,17 +246,21 @@ function Cursor() {
   const [label, setLabel] = useState("");
   useEffect(() => {
     if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
-    let x = -99, y = -99, cx = -99, cy = -99, raf = 0;
+    let x = -99, y = -99, raf = 0;
     const pick = () => {
+      raf = 0;
       const el = document.elementFromPoint(x, y)?.closest?.("[data-cursor]") as HTMLElement | null;
       setLabel(el?.dataset.cursor === "watch" ? "Watch" : el?.dataset.cursor === "drag" ? "Drag" : "");
     };
-    const move = (e: PointerEvent) => { x = e.clientX; y = e.clientY; pick(); };
-    const tick = () => { cx += (x - cx) * 0.2; cy += (y - cy) * 0.2; if (ref.current) ref.current.style.transform = `translate3d(${cx}px,${cy}px,0)`; raf = requestAnimationFrame(tick); };
-    window.addEventListener("pointermove", move);
-    window.addEventListener("scroll", pick, { passive: true });
-    raf = requestAnimationFrame(tick);
-    return () => { window.removeEventListener("pointermove", move); window.removeEventListener("scroll", pick); cancelAnimationFrame(raf); };
+    const queue = () => { if (!raf) raf = requestAnimationFrame(pick); };
+    const move = (e: PointerEvent) => {
+      x = e.clientX; y = e.clientY;
+      if (ref.current) ref.current.style.transform = `translate3d(${x}px,${y}px,0)`;
+      queue();
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("scroll", queue, { passive: true });
+    return () => { window.removeEventListener("pointermove", move); window.removeEventListener("scroll", queue); cancelAnimationFrame(raf); };
   }, []);
   return <div ref={ref} className={`cur${label ? " big" : ""}`} aria-hidden><span>{label}</span></div>;
 }

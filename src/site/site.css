@@ -45,10 +45,14 @@ em { font-style: normal; color: var(--red); }
 .stage { position: relative; flex: 1 1 auto; perspective: 2200px; perspective-origin: 50% 40%; cursor: grab; touch-action: pan-y; user-select: none; }
 .stage:active { cursor: grabbing; }
 .ring { position: absolute; left: 50%; top: 46%; transform-style: preserve-3d; will-change: transform; }
-.card { position: absolute; left: 0; top: 0; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #111; backface-visibility: hidden; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9); outline: 1px solid rgba(255, 255, 255, 0.08); transition: outline-color 0.3s; -webkit-box-reflect: below 10px linear-gradient(transparent 72%, rgba(255, 255, 255, 0.12)); }
+.card { position: absolute; left: 0; top: 0; aspect-ratio: 16 / 9; backface-visibility: hidden; }
+.card .frame { position: absolute; inset: 0; border-radius: 10px; overflow: hidden; background: #111; box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9); outline: 1px solid rgba(255, 255, 255, 0.08); transition: outline-color 0.3s; }
 .card video, .card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.card.front { outline: 1px solid rgba(255, 255, 255, 0.35); }
-.card .tag { position: absolute; left: 12px; top: 10px; font-size: 11px; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.8); text-shadow: 0 1px 8px #000; }
+.card.front .frame { outline: 1px solid rgba(255, 255, 255, 0.35); }
+.card .shade { position: absolute; inset: 0; z-index: 1; background: #000; opacity: 0.7; pointer-events: none; }
+.card .refl { position: absolute; left: 0; right: 0; top: calc(100% + 10px); height: 100%; border-radius: 10px; overflow: hidden; opacity: 0.12; pointer-events: none; -webkit-mask-image: linear-gradient(#000, transparent 28%); mask-image: linear-gradient(#000, transparent 28%); }
+.card .refl > * { transform: scaleY(-1); }
+.card .tag { z-index: 2; position: absolute; left: 12px; top: 10px; font-size: 11px; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.8); text-shadow: 0 1px 8px #000; }
 .card .verts { display: flex; justify-content: center; gap: 4px; height: 100%; background: #000; }
 .card .verts video, .card .verts img { width: auto; height: 100%; aspect-ratio: 9 / 16; }
 
@@ -111,9 +115,9 @@ em { font-style: normal; color: var(--red); }
 @media (max-width: 700px) { .pverts video { height: auto; width: 31vw; } }
 
 /* cursor */
-.cur { position: fixed; left: 0; top: 0; z-index: 70; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--ink); pointer-events: none; display: grid; place-items: center; transition: width 0.25s var(--ease), height 0.25s var(--ease), margin 0.25s var(--ease), background 0.25s; mix-blend-mode: difference; }
+.cur { position: fixed; left: 0; top: 0; z-index: 70; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35); pointer-events: none; display: grid; place-items: center; will-change: transform; transition: width 0.25s var(--ease), height 0.25s var(--ease), margin 0.25s var(--ease), background 0.25s; }
 .cur span { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; opacity: 0; transition: opacity 0.2s; }
-.cur.big { width: 72px; height: 72px; margin: -36px 0 0 -36px; background: var(--red); mix-blend-mode: normal; }
+.cur.big { width: 72px; height: 72px; margin: -36px 0 0 -36px; background: var(--red); }
 .cur.big span { opacity: 1; }
 @media (hover: none), (pointer: coarse) { .cur { display: none; } }
 
@@ -127,10 +131,10 @@ em { font-style: normal; color: var(--red); }
 .mailmenu a { display: flex; justify-content: space-between; gap: 24px; padding: 12px; border-radius: 4px; font-size: 15px; font-weight: 600; }
 .mailmenu a:hover { background: var(--red); color: #fff; }
 .mailmenu a span { padding: 0; font-size: 14px; letter-spacing: 0; color: inherit; text-transform: none; }
-.svc-sound { position: absolute; top: 14px; right: 14px; z-index: 2; padding: 8px 12px; border-radius: 4px; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-size: 12px; letter-spacing: 0.06em; backdrop-filter: blur(6px); transition: background 0.2s; }
+.svc-sound { position: absolute; top: 14px; right: 14px; z-index: 2; padding: 8px 12px; border-radius: 4px; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.2); font-size: 12px; letter-spacing: 0.06em; transition: background 0.2s; }
 .svc-sound:hover, .svc-sound[aria-pressed='true'] { background: var(--red); border-color: var(--red); color: #fff; }
 
-.card-sound { position: absolute; top: 10px; right: 10px; z-index: 2; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; backdrop-filter: blur(6px); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+.card-sound { position: absolute; top: 10px; right: 10px; z-index: 2; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
 .card-sound:hover { transform: scale(1.08); background: rgba(0, 0, 0, 0.8); }
 .card-sound.on { background: var(--red); border-color: var(--red); }
 .svc-sound { display: inline-flex; align-items: center; gap: 8px; }

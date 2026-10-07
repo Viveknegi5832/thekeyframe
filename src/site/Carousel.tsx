@@ -12,6 +12,7 @@ export function Carousel({ onWatch }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const shadeRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const frontRef = useRef<HTMLVideoElement>(null);
   const angle = useRef(0); // ring rotation in degrees (positive = later cards come to front)
   const vel = useRef(0);
@@ -40,6 +41,8 @@ export function Carousel({ onWatch }: Props) {
     let raf = 0;
     let lastActive = -1;
     let lastNear = "";
+    let lastA = NaN;
+    const prev: { hidden?: boolean; op?: string; shade?: string }[] = [];
     const tick = () => {
       if (!drag.current) {
         if (target.current !== null) {
@@ -56,6 +59,8 @@ export function Carousel({ onWatch }: Props) {
         }
       }
       const a = angle.current;
+      if (a === lastA) { raf = requestAnimationFrame(tick); return; } // nothing moved: skip all style writes
+      lastA = a;
       if (ringRef.current) ringRef.current.style.transform = `translateZ(${-dims.r}px) rotateY(${-a}deg)`;
       const nearList: number[] = [];
       cardRefs.current.forEach((el, i) => {
@@ -63,11 +68,13 @@ export function Carousel({ onWatch }: Props) {
         const d = Math.abs(wrap(i * STEP - a));
         const k = Math.max(0, 1 - d / 95);
         const hidden = d > STEP * 2.3;
-        el.style.visibility = hidden ? "hidden" : "visible";
-        el.style.opacity = String(hidden ? 0 : Math.max(0, 1 - d / (STEP * 2.6)) * 0.85 + (d < 1 ? 0.15 : 0));
-        el.style.filter = `brightness(${0.3 + 0.7 * Math.pow(k, 2.2)})`;
-        el.style.pointerEvents = hidden ? "none" : "auto";
-        if (d < STEP * 2.6) nearList.push(i);
+        const op = (hidden ? 0 : Math.max(0, 1 - d / (STEP * 2.6)) * 0.85 + (d < 1 ? 0.15 : 0)).toFixed(3);
+        const shade = (0.7 - 0.7 * Math.pow(k, 2.2)).toFixed(3); // dark overlay = old brightness() filter, but compositor-only
+        const p = (prev[i] ||= {});
+        if (p.hidden !== hidden) { p.hidden = hidden; el.style.visibility = hidden ? "hidden" : "visible"; el.style.pointerEvents = hidden ? "none" : "auto"; }
+        if (p.op !== op) { p.op = op; el.style.opacity = op; }
+        if (p.shade !== shade) { p.shade = shade; const sh = shadeRefs.current[i]; if (sh) sh.style.opacity = shade; }
+        if (d < STEP * 1.6) nearList.push(i); // only the front card and its neighbours get live video
       });
       const act = ((Math.round(a / STEP) % N) + N) % N;
       if (act !== lastActive) { lastActive = act; setActive(act); }
@@ -114,6 +121,15 @@ export function Carousel({ onWatch }: Props) {
     io.observe(el);
     return () => io.disconnect();
   }, [sound]);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      el.querySelectorAll("video").forEach((v) => { if (e.isIntersecting) void v.play().catch(() => {}); else v.pause(); });
+    }, { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const watch = useCallback((i: number) => { setSound(false); onWatch(i); }, [onWatch]);
   const onEnded = () => { if (idle.current) step(1); };
 
@@ -182,6 +198,7 @@ export function Carousel({ onWatch }: Props) {
                 onClick={() => { if (drag.current?.moved) return; if (isFront) watch(i); else { idle.current = false; goTo(i); } }}
                 data-cursor={isFront ? "watch" : "drag"}
               >
+                <div className="frame">
                 {s.vertical ? (
                   <div className="verts">
                     {s.vertical.map((v) => (show ? <video key={v} src={loop(v)} poster={poster(v)} muted autoPlay loop playsInline /> : <img key={v} src={poster(v)} alt="" />))}
@@ -210,6 +227,15 @@ export function Carousel({ onWatch }: Props) {
                     <SoundIcon on={isFront && sound} />
                   </button>
                 )}
+                <span className="shade" ref={(el) => { shadeRefs.current[i] = el; }} />
+                </div>
+                <div className="refl" aria-hidden>
+                  {s.vertical ? (
+                    <div className="verts">{s.vertical.map((v) => <img key={v} src={poster(v)} alt="" loading="lazy" />)}</div>
+                  ) : (
+                    <img src={poster(s.id)} alt="" loading="lazy" />
+                  )}
+                </div>
               </div>
             );
           })}
