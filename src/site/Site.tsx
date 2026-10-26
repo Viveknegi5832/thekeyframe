@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { contact, loop, poster, shots, src } from "../cinema/data";
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
+import { categories, contact, loop, poster, saas, shots, src, type Category, type Shot } from "../cinema/data";
 import { Carousel } from "./Carousel";
 import { SoundIcon } from "./SoundIcon";
 
 const SERVICES = [
-  { n: "01", title: "Documentaries & trailers", clip: "reddit" },
-  { n: "02", title: "Long-form YouTube", clip: "ten-million" },
-  { n: "03", title: "Motion graphics", clip: "cold-email" },
-  { n: "04", title: "Shorts & podcasts", clip: "kinetic-interview" },
+  { n: "01", title: "SaaS product launch videos", clip: "saas-wander" },
+  { n: "02", title: "Documentaries & trailers", clip: "reddit" },
+  { n: "03", title: "B2B & long-form YouTube", clip: "ten-million" },
+  { n: "04", title: "Motion graphics", clip: "cold-email" },
+  { n: "05", title: "Shorts & reels", clip: "short-b", vertical: true },
 ];
 
 function useInView<T extends HTMLElement>() {
@@ -23,6 +24,18 @@ function useInView<T extends HTMLElement>() {
   return [ref, on] as const;
 }
 
+/** Live on-screen flag (unlike useInView, flips back off when scrolled away). */
+function useOnScreen<T extends HTMLElement>(ref: RefObject<T | null>) {
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  return on;
+}
 function Nav() {
   const [solid, setSolid] = useState(false);
   useEffect(() => {
@@ -36,6 +49,7 @@ function Nav() {
       <a href="#top" className="brand">Vivek Negi<span>Editor</span></a>
       <nav>
         <a href="#work">Work</a>
+        <a href="#saas" className="hot">Product launch</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#contact" className="talk">Let's talk</a>
@@ -76,8 +90,8 @@ function ShortsPlayer({ ids }: { ids: string[] }) {
   );
 }
 
-function Player({ i, onClose, onStep }: { i: number; onClose: () => void; onStep: (d: number) => void }) {
-  const s = shots[i];
+function Player({ list, i, onClose, onStep }: { list: Shot[]; i: number; onClose: () => void; onStep: (d: number) => void }) {
+  const s = list[i];
   useEffect(() => {
     const on = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -105,6 +119,94 @@ function Player({ i, onClose, onStep }: { i: number; onClose: () => void; onStep
           </span>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Silent looping tile; the corner button swaps in the full clip with sound, clicking the video opens the player. */
+function Tile({ s, sound, onSound, onOpen }: { s: Shot; sound: boolean; onSound: (on: boolean) => void; onOpen: () => void }) {
+  const box = useRef<HTMLDivElement>(null);
+  const vid = useRef<HTMLVideoElement>(null);
+  const visible = useOnScreen(box);
+  useEffect(() => {
+    const v = vid.current;
+    if (!v) return;
+    if (visible) void v.play().catch(() => {}); else v.pause();
+  }, [visible, sound]);
+  // mute again when the tile scrolls out of view
+  useEffect(() => { if (!visible && sound) onSound(false); }, [visible, sound, onSound]);
+  return (
+    <div className="tile" ref={box}>
+      <button className="tile-media" data-cursor="watch" onClick={onOpen} aria-label={`Watch ${s.title}`}>
+        {sound ? (
+          <video key="full" ref={vid} src={src(s.id)} poster={poster(s.id)} loop playsInline />
+        ) : (
+          <video key="loop" ref={vid} src={loop(s.id)} poster={poster(s.id)} muted loop playsInline preload="none" />
+        )}
+      </button>
+      <button className={`card-sound${sound ? " on" : ""}`} onClick={() => onSound(!sound)} aria-pressed={sound} aria-label={sound ? `Mute ${s.title}` : `Unmute ${s.title}`}>
+        <SoundIcon on={sound} />
+      </button>
+      <span className="tile-cap"><b>{s.title}</b><em>{s.length ?? s.kind}</em></span>
+      {s.note && <span className="tile-note">{s.note}</span>}
+    </div>
+  );
+}
+
+function CategorySection({ c, n, soundKey, setSoundKey, onWatch }: {
+  c: Category; n: number; soundKey: string | null; setSoundKey: (k: string | null) => void; onWatch: (i: number) => void;
+}) {
+  const [ref, on] = useInView<HTMLElement>();
+  return (
+    <section className={`cat rv${on ? " in" : ""}${c.id === "shorts" ? " tall" : ""}${c.id === "saas" ? " featured" : ""}`} id={c.id} ref={ref}>
+      <header className="cat-head">
+        <span className="label">{String(n).padStart(2, "0")} — {c.title}</span>
+        <h3>{c.title}</h3>
+        <p>{c.blurb}</p>
+      </header>
+      <div className="cat-grid">
+        {c.items.map((s, k) => {
+          const key = `${c.id}:${s.id}`;
+          return (
+            <Tile
+              key={s.id}
+              s={s}
+              sound={soundKey === key}
+              onSound={(on) => setSoundKey(on ? key : soundKey === key ? null : soundKey)}
+              onOpen={() => onWatch(k)}
+            />
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+const SAAS: Category = {
+  id: "saas",
+  title: "SaaS Product Launch",
+  blurb: "Concept launch films I designed, animated and cut end to end: UI motion, kinetic type and sound design.",
+  items: saas,
+};
+
+function WorkByType({ onWatch }: { onWatch: (list: Shot[], i: number) => void }) {
+  const [soundKey, setSoundKey] = useState<string | null>(null); // only one tile speaks at a time
+  return (
+    <div className="types" id="types">
+      <nav className="type-chips" aria-label="Work by type">
+        <span>Work by type</span>
+        {[SAAS, ...categories].map((c) => <a key={c.id} href={`#${c.id}`} className={c.id === "saas" ? "hot" : undefined}>{c.title}</a>)}
+      </nav>
+      {[SAAS, ...categories].map((c, k) => (
+        <CategorySection
+          key={c.id}
+          c={c}
+          n={k + 1}
+          soundKey={soundKey}
+          setSoundKey={setSoundKey}
+          onWatch={(i) => { setSoundKey(null); onWatch(c.items, i); }}
+        />
+      ))}
     </div>
   );
 }
@@ -164,9 +266,9 @@ function Services() {
         {SERVICES.map((s, i) =>
           sound && hover === i ? (
             // sound on: the full clip with audio, from the top
-            <video key={`${s.clip}-full`} ref={(el) => { vids.current[i] = el; }} className="on" src={src(s.clip)} poster={poster(s.clip)} loop playsInline />
+            <video key={`${s.clip}-full`} ref={(el) => { vids.current[i] = el; }} className={`on${s.vertical ? " fit" : ""}`} src={src(s.clip)} poster={poster(s.clip)} loop playsInline />
           ) : (
-            <video key={s.clip} ref={(el) => { vids.current[i] = el; }} className={hover === i ? "on" : ""} src={loop(s.clip)} poster={poster(s.clip)} muted loop playsInline />
+            <video key={s.clip} ref={(el) => { vids.current[i] = el; }} className={`${hover === i ? "on" : ""}${s.vertical ? " fit" : ""}`} src={loop(s.clip)} poster={poster(s.clip)} muted loop playsInline />
           ),
         )}
         <button className="svc-sound" onClick={() => setSound((v) => !v)} aria-pressed={sound}>
@@ -266,26 +368,30 @@ function Cursor() {
 }
 
 export function Site() {
-  const [playing, setPlaying] = useState<number | null>(null);
+  const [playing, setPlaying] = useState<{ list: Shot[]; i: number } | null>(null);
+  const watchReel = useCallback((i: number) => setPlaying({ list: shots, i }), []);
+  const watch = useCallback((list: Shot[], i: number) => setPlaying({ list, i }), []);
   return (
     <>
       <Cursor />
       <Nav />
       <main id="top">
         <div className="intro">
-          <span>Video editor — documentaries, trailers, YouTube &amp; motion</span>
+          <span>Video editor — SaaS launch films, documentaries, YouTube &amp; motion</span>
           <span className="hint">Drag the reel · click a film to watch</span>
         </div>
-        <Carousel onWatch={setPlaying} />
+        <Carousel onWatch={watchReel} />
+        <WorkByType onWatch={watch} />
         <About />
         <Services />
         <Contact />
       </main>
       {playing !== null && (
         <Player
-          i={playing}
+          list={playing.list}
+          i={playing.i}
           onClose={() => setPlaying(null)}
-          onStep={(d) => setPlaying((p) => (p === null ? p : (p + d + shots.length) % shots.length))}
+          onStep={(d) => setPlaying((p) => (p === null ? p : { ...p, i: (p.i + d + p.list.length) % p.list.length }))}
         />
       )}
     </>
