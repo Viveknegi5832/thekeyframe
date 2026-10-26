@@ -12,6 +12,8 @@ export type Shot = {
 
 /** Featured SaaS product launch films (concepts) — also lead the reel. */
 export const saas: Shot[] = [
+  { id: "saas-holo", title: "Holo", kind: "Product launch · Spec ad", note: "AI marketing team — Your whole marketing department. One hire.", length: "0:36", accent: "#a46bff" },
+  { id: "saas-tally", title: "Tally", kind: "Product launch · Concept", note: "Money app — Make every dollar count.", length: "0:40", accent: "#ff7a2f" },
   { id: "saas-drift", title: "Drift", kind: "Product launch · Concept", note: "Calendar app — Plan less. Live more.", length: "0:30", accent: "#8b7cff" },
   { id: "saas-wander", title: "Wander", kind: "Product launch · Concept", note: "Group-trip planner — Every trip, in one place.", length: "0:36", accent: "#ff6a3d" },
   { id: "saas-sprout", title: "Sprout", kind: "Product launch · Concept", note: "AI brand studio — Sketch it. Ship it.", length: "0:25", accent: "#9be15d" },
@@ -35,9 +37,9 @@ const library: Shot[] = [
 ];
 
 // reel order: a SaaS launch film in front, alternating with documentaries, then everything else
-const docs = ["madoff", "reddit", "volkswagen"].map((id) => library.find((s) => s.id === id)!);
+const docs = ["madoff", "reddit", "volkswagen", "tudor-jones"].map((id) => library.find((s) => s.id === id)!);
 export const shots: Shot[] = [
-  ...saas.flatMap((s, k) => [s, docs[k]]),
+  ...saas.flatMap((s, k) => (docs[k] ? [s, docs[k]] : [s])),
   ...library.filter((s) => !docs.includes(s)),
 ];
 

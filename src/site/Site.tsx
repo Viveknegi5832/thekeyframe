@@ -185,7 +185,7 @@ function CategorySection({ c, n, soundKey, setSoundKey, onWatch }: {
 const SAAS: Category = {
   id: "saas",
   title: "SaaS Product Launch",
-  blurb: "Concept launch films I designed, animated and cut end to end: UI motion, kinetic type and sound design.",
+  blurb: "Launch films and spec ads I designed, animated and cut end to end: UI motion, kinetic type and sound design.",
   items: saas,
 };
 
