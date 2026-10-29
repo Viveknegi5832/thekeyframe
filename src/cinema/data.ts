@@ -13,6 +13,8 @@ export type Shot = {
 /** Featured SaaS product launch films (concepts) — also lead the reel. */
 export const saas: Shot[] = [
   { id: "saas-holo", title: "Holo", kind: "Product launch · Spec ad", note: "AI marketing team — Your whole marketing department. One hire.", length: "0:36", accent: "#a46bff" },
+  { id: "saas-perix-intel", title: "Perix Intelligence", kind: "Product launch · Beta film", note: "Creator analytics — The creator economy moves fast. Stay in the picture.", length: "0:40", accent: "#e5322f" },
+  { id: "saas-perix", title: "Perix × CharTheWise", kind: "Data story · Spec ad", note: "Creator partnerships — a creator pitch built from his real numbers.", length: "0:30", accent: "#e8384f" },
   { id: "saas-tally", title: "Tally", kind: "Product launch · Concept", note: "Money app — Make every dollar count.", length: "0:40", accent: "#ff7a2f" },
   { id: "saas-drift", title: "Drift", kind: "Product launch · Concept", note: "Calendar app — Plan less. Live more.", length: "0:30", accent: "#8b7cff" },
   { id: "saas-wander", title: "Wander", kind: "Product launch · Concept", note: "Group-trip planner — Every trip, in one place.", length: "0:36", accent: "#ff6a3d" },
@@ -25,6 +27,7 @@ const library: Shot[] = [
   { id: "volkswagen", title: "The Disturbing History of Volkswagen", kind: "Documentary" },
   { id: "tudor-jones", title: "Paul Tudor Jones", kind: "Documentary" },
   { id: "kinetic-interview", title: "Founder Interview", kind: "Cold open" },
+  { id: "yap-trailer", title: "Young and Profiting × Jim Kwik", kind: "Podcast trailer", length: "1:03" },
   { id: "ten-million", title: "$10.6M in Cash", kind: "YouTube intro" },
   { id: "cold-email", title: "5M Cold Emails", kind: "YouTube intro" },
   { id: "dropshipping", title: "3 Lies About Dropshipping", kind: "YouTube intro" },
@@ -58,7 +61,7 @@ export const categories: Category[] = [
     id: "b2b",
     title: "B2B",
     blurb: "Product films, launch videos and YouTube intros for founders, agencies and B2B brands.",
-    items: pick("route-hub", "news-launch", "kinetic-interview", "ten-million", "cold-email", "thousand-demos", "dropshipping", "vibescaling", "nine-to-five"),
+    items: pick("route-hub", "news-launch", "kinetic-interview", "yap-trailer", "ten-million", "cold-email", "thousand-demos", "dropshipping", "vibescaling", "nine-to-five"),
   },
   {
     id: "shorts",
