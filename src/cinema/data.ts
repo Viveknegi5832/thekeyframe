@@ -13,12 +13,12 @@ export type Shot = {
 /** Featured SaaS product launch films (concepts) — also lead the reel. */
 export const saas: Shot[] = [
   { id: "saas-holo", title: "Holo", kind: "Product launch · Spec ad", note: "AI marketing team — Your whole marketing department. One hire.", length: "0:36", accent: "#a46bff" },
-  { id: "saas-perix-intel", title: "Perix Intelligence", kind: "Product launch · Beta film", note: "Creator analytics — The creator economy moves fast. Stay in the picture.", length: "0:40", accent: "#e5322f" },
-  { id: "saas-perix", title: "Perix × CharTheWise", kind: "Data story · Spec ad", note: "Creator partnerships — a creator pitch built from his real numbers.", length: "0:30", accent: "#e8384f" },
   { id: "saas-tally", title: "Tally", kind: "Product launch · Concept", note: "Money app — Make every dollar count.", length: "0:40", accent: "#ff7a2f" },
   { id: "saas-drift", title: "Drift", kind: "Product launch · Concept", note: "Calendar app — Plan less. Live more.", length: "0:30", accent: "#8b7cff" },
   { id: "saas-wander", title: "Wander", kind: "Product launch · Concept", note: "Group-trip planner — Every trip, in one place.", length: "0:36", accent: "#ff6a3d" },
   { id: "saas-sprout", title: "Sprout", kind: "Product launch · Concept", note: "AI brand studio — Sketch it. Ship it.", length: "0:25", accent: "#9be15d" },
+  { id: "saas-perix-intel", title: "Perix Intelligence", kind: "Product launch · Beta film", note: "Creator analytics — The creator economy moves fast. Stay in the picture.", length: "0:40", accent: "#e5322f" },
+  { id: "saas-perix", title: "Perix × CharTheWise", kind: "Data story · Spec ad", note: "Creator partnerships — a creator pitch built from his real numbers.", length: "0:30", accent: "#e8384f" },
 ];
 
 const library: Shot[] = [
