@@ -26,6 +26,8 @@ const library: Shot[] = [
   { id: "reddit", title: "The Deadly Truth About Reddit", kind: "Documentary" },
   { id: "volkswagen", title: "The Disturbing History of Volkswagen", kind: "Documentary" },
   { id: "tudor-jones", title: "Paul Tudor Jones", kind: "Documentary" },
+  { id: "doc-jim-simons", title: "The Mathematician Who Cracked Wall Street", kind: "Documentary" },
+  { id: "doc-zuck-comeback", title: "Zuck's Comeback", kind: "Documentary intro" },
   { id: "kinetic-interview", title: "Founder Interview", kind: "Cold open" },
   { id: "yap-trailer", title: "Young and Profiting × Jim Kwik", kind: "Podcast trailer", length: "1:03" },
   { id: "ten-million", title: "$10.6M in Cash", kind: "YouTube intro" },
@@ -36,6 +38,12 @@ const library: Shot[] = [
   { id: "news-launch", title: "Breaking News", kind: "Launch film" },
   { id: "vibescaling", title: "1,000,000 Views", kind: "YouTube intro" },
   { id: "nine-to-five", title: "Quit Your 9–5", kind: "YouTube intro" },
+  { id: "yt-zi-intel", title: "Best Market Intelligence Tools", kind: "ZoomInfo · YouTube" },
+  { id: "yt-mason-ad-angles", title: "The Facebook Ad Angles Framework", kind: "YouTube · E-commerce" },
+  { id: "yt-tanya-veterans", title: "Why 2026 Is the Year for Veterans", kind: "YouTube · Education" },
+  { id: "yt-claude-skills", title: "5 Claude Cowork Cheat Codes", kind: "YouTube · Tutorial" },
+  { id: "yt-zi-abm", title: "Best ABM Platforms", kind: "ZoomInfo · YouTube" },
+  { id: "yt-essence-clients", title: "Stop Attracting the Wrong Clients", kind: "YouTube · Coaching" },
   { id: "shorts", title: "Shorts", kind: "Vertical", vertical: ["short-a", "short-b", "short-c"] },
 ];
 
@@ -52,10 +60,16 @@ const pick = (...ids: string[]) => ids.map((id) => library.find((s) => s.id === 
 
 export const categories: Category[] = [
   {
+    id: "longform",
+    title: "Long-form YouTube",
+    blurb: "Full-length YouTube videos for SaaS brands, coaches and creators: talking head, screen walkthroughs, chapter cards and motion graphics.",
+    items: pick("yt-zi-intel", "yt-mason-ad-angles", "yt-tanya-veterans", "yt-claude-skills", "yt-zi-abm", "yt-essence-clients"),
+  },
+  {
     id: "documentary",
     title: "Documentary",
     blurb: "Research-heavy stories, archival cuts and trailers that hold attention for the full runtime.",
-    items: pick("madoff", "reddit", "volkswagen", "tudor-jones"),
+    items: pick("madoff", "reddit", "volkswagen", "tudor-jones", "doc-jim-simons", "doc-zuck-comeback"),
   },
   {
     id: "b2b",
@@ -67,7 +81,7 @@ export const categories: Category[] = [
     id: "shorts",
     title: "Shorts & Reels",
     blurb: "Vertical edits built for the first second — captions, pace and hooks.",
-    items: ["short-a", "short-b", "short-c"].map((id, k) => ({ id, title: `Short ${String(k + 1).padStart(2, "0")}`, kind: "Vertical", vertical: [id] })),
+    items: ["short-a", "short-b", "short-c", "short-zi-clay", "short-dub", "short-elevenlabs"].map((id, k) => ({ id, title: `Short ${String(k + 1).padStart(2, "0")}`, kind: "Vertical", vertical: [id] })),
   },
 ];
 
